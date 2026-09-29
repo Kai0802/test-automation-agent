@@ -1,0 +1,14 @@
+[project]
+name = "toollib"
+version = "0.1.0"
+description = "Neighbourhood tool library: the application under test"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.142.0",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy>=2.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.20,<0.13.0"]
+build-backend = "uv_build"

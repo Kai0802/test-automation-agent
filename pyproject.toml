@@ -1,0 +1,45 @@
+[project]
+name = "test-validation-ai-workspace"
+version = "0.1.0"
+description = "AI test generation and evaluation platform, with a sample app under test"
+readme = "README.md"
+authors = [
+    { name = "Kai0802", email = "h.phuoc137@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "toollib",
+]
+
+[tool.uv.sources]
+toollib = { workspace = true }
+
+[tool.uv.workspace]
+members = ["apps/*", "packages/*"]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.13.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.9",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["apps/toollib/tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["toollib"]
+branch = true
+# Per-test coverage (for test selection later): run pytest with --cov-context=test
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["toollib", "conftest"]

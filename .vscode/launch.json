@@ -1,0 +1,56 @@
+{
+  // Open the project root (test-validation-ai/) in VS Code and select ./.venv/bin/python
+  // as the interpreter, otherwise these configurations cannot find toollib.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // F5, then send requests with curl/Postman to http://localhost:8000.
+      // No --reload: breakpoints are unreliable in uvicorn's reload subprocess. Restart with Shift+Cmd+F5.
+      "name": "Toollib: debug server",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["toollib.main:app", "--port", "8000"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "TOOLLIB_TEST_MODE": "true"
+      },
+      "justMyCode": true,
+      "console": "integratedTerminal"
+    },
+    {
+      // Same as above, but F11 can also step into FastAPI, Pydantic and SQLAlchemy code.
+      "name": "Toollib: debug server (step into libraries)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["toollib.main:app", "--port", "8000"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "TOOLLIB_TEST_MODE": "true"
+      },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      // Open a test file, then F5 with this selected.
+      "name": "Toollib: debug current test file",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${file}", "-q"],
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true,
+      "console": "integratedTerminal"
+    },
+    {
+      // For a server started from the terminal with:
+      //   TOOLLIB_TEST_MODE=true uv run --with debugpy python -m debugpy --listen 5678 --wait-for-client -m uvicorn toollib.main:app --port 8000
+      "name": "Toollib: attach to running server (port 5678)",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": { "host": "localhost", "port": 5678 },
+      "justMyCode": true
+    }
+  ]
+}
